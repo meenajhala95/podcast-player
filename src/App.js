@@ -1,25 +1,21 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { Provider } from 'react-redux';
+import { store } from './redux/store';
+import ShowList from './components/ShowList';
+import EpisodeList from './components/EpisodeList';
+import EpisodePlayer from './components/EpisodePlayer';
 
-function App() {
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <div>
+        <h1>Podcast Player by Sochcast</h1>
+        <ShowList />
+        <EpisodeList />
+        <EpisodePlayer />
+      </div>
+    </Provider>
   );
-}
+};
 
 export default App;
