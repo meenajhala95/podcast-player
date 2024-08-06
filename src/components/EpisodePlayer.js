@@ -5,6 +5,7 @@ import { setCurrentEpisode } from '../redux/showSlice';
 const EpisodePlayer = () => {
   const dispatch = useDispatch();
   const currentEpisode = useSelector((state) => state.shows.currentEpisode);
+  const episodes = useSelector((state) => state.shows.episodes);
   const audioRef = useRef(null);
 
   useEffect(() => {
@@ -15,7 +16,21 @@ const EpisodePlayer = () => {
   }, [currentEpisode]);
 
   const handleEnded = () => {
-    // Implement logic to play the next episode
+    const currentIndex = episodes.findIndex((episode) => episode.id === currentEpisode.id);
+    const nextEpisode = episodes[currentIndex + 1];
+
+    if (nextEpisode) {
+      dispatch(setCurrentEpisode(nextEpisode));
+    }
+  };
+
+  const handleNext = () => {
+    const currentIndex = episodes.findIndex((episode) => episode.id === currentEpisode.id);
+    const nextEpisode = episodes[currentIndex + 1];
+
+    if (nextEpisode) {
+      dispatch(setCurrentEpisode(nextEpisode));
+    }
   };
 
   return (
@@ -26,6 +41,7 @@ const EpisodePlayer = () => {
           <audio ref={audioRef} controls onEnded={handleEnded}>
             <source src={currentEpisode.audio} type="audio/mpeg" />
           </audio>
+          <button onClick={handleNext}>Next Episode</button>
         </>
       )}
     </div>

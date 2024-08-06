@@ -1,9 +1,11 @@
+// src/redux/showSlice.js
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import { fetchShows } from '../services/api';
 
 export const fetchShowList = createAsyncThunk('shows/fetchShowList', async () => {
   const response = await fetchShows();
-  return response.shows;
+  console.log('Fetched Shows Thunk Payload:', response);
+  return response.results;
 });
 
 const showSlice = createSlice({
@@ -23,7 +25,8 @@ const showSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder.addCase(fetchShowList.fulfilled, (state, action) => {
-      state.list = action.payload;
+      state.list = action.payload || []; // Handle cases where payload might be undefined or null
+      console.log('Updated Show List State:', state.list);
     });
   },
 });
